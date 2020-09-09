@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   end
 
   def new
-    
+    @post = Post.new
   end
 
   def create
@@ -16,8 +16,12 @@ class PostsController < ApplicationController
     # @post = Post.new(params[:post])
     # @post = Post.new(params.require(:post).permit(:title, :body))
     @post = Post.new(post_params)
-    @post.save
-    redirect_to posts_path
+    if @post.save
+      redirect_to posts_path
+    else
+      # render plain: @post.errors.inspect
+      render 'new'
+    end
   end
   
   private
